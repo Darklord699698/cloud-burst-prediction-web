@@ -1,25 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { assets } from "../assets/assets.js";
-//may not be needed lets see
-const Header = () => {
+
+const Header = ({ onSearch }) => {
+  const [searchInput, setSearchInput] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const cities = ["Los Angeles", "Chicago", "New York"];
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const normalized = searchInput.trim().toLowerCase();
+
+    const validCities = {
+      "los angeles": "Los Angeles",
+      "chicago": "Chicago",
+      "new york": "New York"
+    };
+
+    if (validCities[normalized]) {
+      onSearch(validCities[normalized]);
+      setShowDropdown(false); // Hide dropdown after selection
+    } else {
+      alert('Try Los Angeles, Chicago, or New York.');
+    }
+  };
+
+  const handleSelectCity = (city) => {
+    setSearchInput(city);
+    setShowDropdown(false);
+    onSearch(city);
+  };
+
   return (
-    <header className="flex items-center justify-between p-4 text-white bg-slate-200">
-      <div className="flex-1"></div>
-      <div className="relative flex-1">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full px-4 py-2 pr-10 text-black bg-gray-300 rounded-full focus:outline-none"
+    <header className="relative z-10 flex items-center justify-between p-4 text-white bg-slate-200">
+      <div className="flex-1" />
+      <form onSubmit={handleSearch} className="relative flex-1 max-w-md mx-auto">
+        <div className="flex">
+          <input
+            type="text"
+            placeholder="Search city..."
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+              setShowDropdown(true);
+            }}
+            onFocus={() => setShowDropdown(true)}
+            className="w-full px-4 py-2 text-black bg-gray-300 rounded-l-md focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 text-white transition-all bg-blue-600 rounded-r-md hover:bg-blue-700"
+          >
+            Search
+          </button>
+        </div>
+
+        {showDropdown && (
+          <ul className="absolute left-0 z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-md">
+            {cities
+              .filter((city) =>
+                city.toLowerCase().includes(searchInput.trim().toLowerCase())
+              )
+              .map((city) => (
+                <li
+                  key={city}
+                  onClick={() => handleSelectCity(city)}
+                  className="px-4 py-2 text-black cursor-pointer hover:bg-gray-100"
+                >
+                  {city}
+                </li>
+              ))}
+          </ul>
+        )}
+      </form>
+
+      <div className="flex items-center justify-end flex-1 space-x-4">
+        <img
+          src={assets.notificationbell}
+          alt="Notifications"
+          className="w-6 h-6 cursor-pointer"
         />
         <img
-          src={assets.magnifyingglass}
-          alt="Search"
-          className="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 right-3 top-1/2"
+          src={assets.user}
+          alt="Profile"
+          className="w-6 h-6 cursor-pointer"
         />
-      </div>
-      <div className="flex items-center justify-end flex-1 space-x-4">
-        <img src={assets.notificationbell} alt="Notifications" className="w-6 h-6 cursor-pointer" />
-        <img src={assets.user} alt="Profile" className="w-6 h-6 cursor-pointer" />
       </div>
     </header>
   );
