@@ -40,12 +40,65 @@ const Main = ({ searchedCity }) => {
   const [error, setError] = useState(null);
 
   const apiKey = "7b3ffbfe64a1f83e9f112cb4896344ad";
+  const unsplashAccessKey = "3YqgeNBUUUQ2wMEY4zQUcwN-zyjxwxiv7HyOWcPXV48"; // <-- Replace with your Unsplash access key
+const [dynamicImage, setDynamicImage] = useState(null);
 
-  const filteredImages = searchedCity
-    ? images.filter((img) => img.name.toLowerCase() === searchedCity.toLowerCase())
-    : images;
 
-  const displayImage = filteredImages[0] || images[currentIndex];
+useEffect(() => {
+  const fetchCityImage = async () => {
+    if (searchedCity) {
+      try {
+        const response = await axios.get(
+          `https://api.unsplash.com/search/photos`,
+          {
+            params: {
+              query: searchedCity + " city",
+              orientation: "landscape",
+              per_page: 1,
+            },
+            headers: {
+              Authorization: `Client-ID ${unsplashAccessKey}`,
+            },
+          }
+        );
+
+        if (response.data.results.length > 0) {
+          setDynamicImage({
+            src: response.data.results[0].urls.regular,
+            name: searchedCity,
+            country: "", // country is not required for display
+          });
+        } else {
+          setDynamicImage(null);
+        }
+      } catch (err) {
+        console.error("Failed to fetch image from Unsplash:", err);
+        setDynamicImage(null);
+      }
+    }
+  };
+
+  fetchCityImage();
+}, [searchedCity]);
+
+
+const displayImage = searchedCity
+? dynamicImage || images.find((img) => img.name.toLowerCase() === searchedCity.toLowerCase()) || images[currentIndex]
+: images[currentIndex];
+
+  useEffect(() => {
+    if (searchedCity) {
+      const index = images.findIndex(
+        (img) => img.name.toLowerCase() === searchedCity.toLowerCase()
+      );
+      if (index !== -1) {
+        setCurrentIndex(index);
+      }
+    }
+  }, [searchedCity]);
+  
+
+
 
   const getWeather = async (city, country) => {
     const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`;

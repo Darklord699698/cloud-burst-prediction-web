@@ -9,20 +9,13 @@ const Header = ({ onSearch }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    const normalized = searchInput.trim().toLowerCase();
-
-    const validCities = {
-      "los angeles": "Los Angeles",
-      "chicago": "Chicago",
-      "new york": "New York"
-    };
-
-    if (validCities[normalized]) {
-      onSearch(validCities[normalized]);
-      setShowDropdown(false); // Hide dropdown after selection
-    } else {
-      alert('Try Los Angeles, Chicago, or New York.');
+    const city = searchInput.trim();
+    if (!city) {
+      alert("Please enter a city name.");
+      return;
     }
+    onSearch(city);
+    setShowDropdown(false);
   };
 
   const handleSelectCity = (city) => {
@@ -38,7 +31,7 @@ const Header = ({ onSearch }) => {
         <div className="flex">
           <input
             type="text"
-            placeholder="Search city..."
+            placeholder="Search any city (e.g., Tokyo, Mumbai, Paris...)"
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value);
