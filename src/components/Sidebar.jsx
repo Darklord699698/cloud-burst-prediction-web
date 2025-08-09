@@ -1,35 +1,60 @@
+// Sidebar.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { assets } from '../assets/assets';  // Adjust the path as needed
+import { assets } from '../assets/assets'; // Adjust path as needed
 
-const Sidebar = () => {
+const Sidebar = ({ onNavigate }) => {
   return (
     <div className="fixed top-0 left-0 z-10 w-64 h-full bg-cyan-300">
       <ul className="flex flex-col h-full gap-8 p-4 mt-24 text-center">
-        <li className="flex items-center mb-4 ml-10">
-          <img src={assets.home} alt="Home" className="w-6 h-6 mr-2" />  {/* Adjust the icon size as needed */}
-          <Link to="/" className="text-white">Home</Link>
+        
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('home')}
+        >
+          <img src={assets.home} alt="Home" className="w-6 h-6 mr-2" />
+          <span className="text-white">Home</span>
         </li>
-        <li className="flex items-center mb-4 ml-10">
+
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('forecast')}
+        >
           <img src={assets.forecast} alt="Forecast" className="w-6 h-6 mr-2" />
-          <Link to="/Forecast" className="text-white">Forecast</Link>
+          <span className="text-white">Forecast</span>
         </li>
-        <li className="flex items-center mb-4 ml-10">
+
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('location')}
+        >
           <img src={assets.location} alt="Location" className="w-6 h-6 mr-2" />
-          <Link to="/Location" className="text-white">Location</Link>
+          <span className="text-white">Location</span>
         </li>
-        <li className="flex items-center mb-4 ml-10">
+
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('analytics')}
+        >
           <img src={assets.Analytics} alt="Analytics" className="w-6 h-6 mr-2" />
-          <Link to="/Analytics" className="text-white">Analytics</Link>
+          <span className="text-white">Analytics</span>
         </li>
-        <li className="flex items-center mb-4 ml-10">
+
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('calendar')}
+        >
           <img src={assets.calendar} alt="Calendar" className="w-6 h-6 mr-2" />
-          <Link to="/Calendar" className="text-white">Calendar</Link>
+          <span className="text-white">Calendar</span>
         </li>
-        <li className="flex items-center mb-4 ml-10">
+
+        <li
+          className="flex items-center mb-4 ml-10 cursor-pointer hover:opacity-80"
+          onClick={() => onNavigate('settings')}
+        >
           <img src={assets.settings} alt="Settings" className="w-6 h-6 mr-2" />
-          <Link to="/Settings" className="text-white">Settings</Link>
+          <span className="text-white">Settings</span>
         </li>
+
       </ul>
     </div>
   );
