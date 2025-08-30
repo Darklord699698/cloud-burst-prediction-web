@@ -1,11 +1,12 @@
-// App.jsx
 import React, { useState } from 'react';
 import Main from './components/Main';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Location from './components/Location';
 import Forecast from './components/Forecast';
-import Analytics from './components/Analytics'; // ✅ Import Analytics
+import Analytics from './components/Analytics';
+import CalendarPage from './components/Calendar'; // ✅ Import Calendar
+import SettingsPage from './components/Settings'; // ✅ Import Settings
 
 const App = () => {
   const [searchedCity, setSearchedCity] = useState(null);
@@ -20,7 +21,9 @@ const App = () => {
           {activePage === 'home' && <Main searchedCity={searchedCity} />}
           {activePage === 'location' && <Location />}
           {activePage === 'forecast' && <Forecast searchedCity={searchedCity} />}
-          {activePage === 'analytics' && <Analytics searchedCity={searchedCity} />} {/* ✅ Added Analytics */}
+          {activePage === 'analytics' && <Analytics searchedCity={searchedCity} />}
+          {activePage === 'calendar' && <CalendarPage />} {/* ✅ Added Calendar */}
+          {activePage === 'settings' && <SettingsPage />} {/* ✅ Added Settings */}
         </div>
       </div>
     </div>
