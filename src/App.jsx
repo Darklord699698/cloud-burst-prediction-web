@@ -4,6 +4,7 @@ import Main from './components/Main';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Location from './components/Location';
+import Forecast from './components/Forecast'; // ✅ Import Forecast
 
 const App = () => {
   const [searchedCity, setSearchedCity] = useState(null);
@@ -17,10 +18,8 @@ const App = () => {
         <div className="w-full ml-64">
           {activePage === 'home' && <Main searchedCity={searchedCity} />}
           {activePage === 'location' && <Location />}
-          {/* Later you can add other pages here:
-          {activePage === 'forecast' && <Forecast />}
-          {activePage === 'analytics' && <Analytics />}
-          etc... */}
+          {activePage === 'forecast' && <Forecast searchedCity={searchedCity} />} {/* ✅ Added Forecast */}
+          {/* Later you can add other pages like analytics etc. */}
         </div>
       </div>
     </div>
