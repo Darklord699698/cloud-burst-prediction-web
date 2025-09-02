@@ -26,6 +26,7 @@ ChartJS.register(
   Legend
 );
 
+
 const images = [
   { src: "https://a.travel-assets.com/findyours-php/viewfinder/images/res70/475000/475457-Los-Angeles.jpg", name: "Los Angeles", country: "US" },
   { src: "https://media.cntraveller.com/photos/64f4fc5f663208f83a21af16/3:2/w_3000,h_2000,c_limit/New%20York%20City_GettyImages-1347979016.jpg", name: "New York", country: "US" },
@@ -238,8 +239,9 @@ const displayImage = searchedCity
   };
 
   return (
-    <div className="p-4">
+    <div className="w-full p-6 ">
       <p>Current location</p>
+      
       <h1 className="text-2xl font-bold">{displayImage?.name}</h1>
       <div className="flex flex-col mt-4 lg:flex-row">
         <div className="flex-1">

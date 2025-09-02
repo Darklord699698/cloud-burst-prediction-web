@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+// Header.jsx
+import React, { useState } from "react";
 import { assets } from "../assets/assets.js";
+import {
+  UserButton,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+} from "@clerk/clerk-react";
+import { User } from "lucide-react"; // ✅ Icon for login
 
 const Header = ({ onSearch }) => {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
   const cities = ["Los Angeles", "Chicago", "New York"];
@@ -27,7 +35,12 @@ const Header = ({ onSearch }) => {
   return (
     <header className="relative z-10 flex items-center justify-between p-4 text-white bg-slate-200">
       <div className="flex-1" />
-      <form onSubmit={handleSearch} className="relative flex-1 max-w-md mx-auto">
+
+      {/* ✅ Search box */}
+      <form
+        onSubmit={handleSearch}
+        className="relative flex-1 max-w-md mx-auto"
+      >
         <div className="flex">
           <input
             type="text"
@@ -67,17 +80,26 @@ const Header = ({ onSearch }) => {
         )}
       </form>
 
+      {/* ✅ Right-side icons */}
       <div className="flex items-center justify-end flex-1 space-x-4">
         <img
           src={assets.notificationbell}
           alt="Notifications"
           className="w-6 h-6 cursor-pointer"
         />
-        <img
-          src={assets.user}
-          alt="Profile"
-          className="w-6 h-6 cursor-pointer"
-        />
+
+        {/* ✅ Clerk authentication */}
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="p-2 rounded-full hover:bg-gray-300">
+              <User className="w-6 h-6 text-black" /> {/* 👤 Icon instead of button */}
+            </button>
+          </SignInButton>
+        </SignedOut>
+
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
       </div>
     </header>
   );
