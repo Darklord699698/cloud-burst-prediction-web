@@ -239,7 +239,12 @@ const displayImage = searchedCity
   };
 
   return (
-    <div className="w-full p-6 ">
+    <div className="relative w-full min-h-screen p-6">
+    <img 
+      src="https://t3.ftcdn.net/jpg/05/02/61/78/360_F_502617818_hovgCFq8Q6iZjrKDZQnW3MzZSBe44ZiB.jpg" 
+      alt="background" 
+      className="absolute inset-0 object-cover w-full h-full -z-10" 
+    />
       <p>Current location</p>
       
       <h1 className="text-2xl font-bold">{displayImage?.name}</h1>
