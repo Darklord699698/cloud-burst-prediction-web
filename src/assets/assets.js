@@ -12,19 +12,22 @@ import sunrise from "./sunrise.png"
 import thermometer from "./thermometer.png"
 import humidity from "./humidity.png"
 import wind from "./wind.png"
-export const assets ={
-    notificationbell,
-    magnifyingglass,
-    Analytics,
-    home,
-    location,
-    forecast,
-    settings,
-    calendar,
-    user,
-    sunset,
-    sunrise,
-    thermometer,
-    humidity,
-    wind
- } 
+import searchingAni from "./searching_ani.json";
+
+export const assets = {
+  notificationbell,
+  magnifyingglass,
+  Analytics,
+  home,
+  location,
+  forecast,
+  settings,
+  calendar,
+  user,
+  sunset,
+  sunrise,
+  thermometer,
+  humidity,
+  wind,
+  searchingAni, // ✅ add Lottie reference
+};

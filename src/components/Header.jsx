@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useState } from "react";
 import { assets } from "../assets/assets.js";
 import {
@@ -6,22 +5,42 @@ import {
   SignInButton,
   SignedIn,
   SignedOut,
+  useUser,
 } from "@clerk/clerk-react";
-import { User } from "lucide-react"; // ✅ Icon for login
+import { User } from "lucide-react";
+import Lottie from "lottie-react";
+import searching_ani from "../assets/searching_ani.json";
 
 const Header = ({ onSearch }) => {
   const [searchInput, setSearchInput] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [saved, setSaved] = useState(false); // ✅ show animation
 
   const cities = ["Los Angeles", "Chicago", "New York"];
+  const { user } = useUser();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     const city = searchInput.trim();
-    if (!city) {
-      alert("Please enter a city name.");
-      return;
+    if (!city) return alert("Please enter a city name.");
+
+    if (user) {
+      try {
+        const res = await fetch("http://localhost:5000/api/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ city, userId: user.id }),
+        });
+        const data = await res.json();
+        if (data.message === "Search saved successfully") {
+          setSaved(true); // ✅ show animation
+          setTimeout(() => setSaved(false), 2000); // hide after 2 seconds
+        }
+      } catch (err) {
+        console.error("Error saving search:", err);
+      }
     }
+
     onSearch(city);
     setShowDropdown(false);
   };
@@ -36,11 +55,8 @@ const Header = ({ onSearch }) => {
     <header className="relative z-10 flex items-center justify-between p-4 text-white bg-slate-200">
       <div className="flex-1" />
 
-      {/* ✅ Search box */}
-      <form
-        onSubmit={handleSearch}
-        className="relative flex-1 max-w-md mx-auto"
-      >
+      {/* Search box */}
+      <form onSubmit={handleSearch} className="relative flex-1 max-w-md mx-auto">
         <div className="flex">
           <input
             type="text"
@@ -78,9 +94,16 @@ const Header = ({ onSearch }) => {
               ))}
           </ul>
         )}
+
+        {/* ✅ Animated Saved! message - only show when `saved` is true */}
+        {saved && (
+          <div className="absolute w-20 h-20 mt-1 transform -translate-x-1/2 left-1/2">
+            <Lottie animationData={searching_ani} loop={false} />
+          </div>
+        )}
       </form>
 
-      {/* ✅ Right-side icons */}
+      {/* Right-side icons */}
       <div className="flex items-center justify-end flex-1 space-x-4">
         <img
           src={assets.notificationbell}
@@ -88,11 +111,10 @@ const Header = ({ onSearch }) => {
           className="w-6 h-6 cursor-pointer"
         />
 
-        {/* ✅ Clerk authentication */}
         <SignedOut>
           <SignInButton mode="modal">
             <button className="p-2 rounded-full hover:bg-gray-300">
-              <User className="w-6 h-6 text-black" /> {/* 👤 Icon instead of button */}
+              <User className="w-6 h-6 text-black" />
             </button>
           </SignInButton>
         </SignedOut>
