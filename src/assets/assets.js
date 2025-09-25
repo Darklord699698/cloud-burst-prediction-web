@@ -13,6 +13,7 @@ import thermometer from "./thermometer.png"
 import humidity from "./humidity.png"
 import wind from "./wind.png"
 import searchingAni from "./searching_ani.json";
+import EmailAni from "./Email.json";  // ✅ import your email Lottie
 
 export const assets = {
   notificationbell,
@@ -29,5 +30,6 @@ export const assets = {
   thermometer,
   humidity,
   wind,
-  searchingAni, // ✅ add Lottie reference
+  searchingAni,
+  EmailAni,  // ✅ add it here
 };
