@@ -6,7 +6,17 @@ import { useTheme } from "../components/ThemeContext";
 const SettingsPage = () => {
   const { darkMode, setDarkMode } = useTheme();
   const [celsius, setCelsius] = useState(true);
-  const [notifications, setNotifications] = useState(true);
+  // In Settings.jsx
+const [notifications, setNotifications] = useState(
+  localStorage.getItem("notificationsEnabled") === "false" ? false : true
+);
+
+const handleNotificationsToggle = () => {
+  setNotifications(!notifications);
+  localStorage.setItem("notificationsEnabled", !notifications);
+};
+
+
 
   return (
     <div className="min-h-screen p-6 overflow-hidden text-gray-900 transition-colors duration-300 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 rounded-2xl">
@@ -71,11 +81,12 @@ const SettingsPage = () => {
             <p className="font-medium">Notifications</p>
           </div>
           <input
-            type="checkbox"
-            checked={notifications}
-            onChange={() => setNotifications(!notifications)}
-            className="w-6 h-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
-          />
+  type="checkbox"
+  checked={notifications}
+  onChange={handleNotificationsToggle}
+  className="w-6 h-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+/>
+
         </div>
 
         {/* Reset Data */}
