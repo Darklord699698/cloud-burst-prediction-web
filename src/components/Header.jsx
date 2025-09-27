@@ -142,11 +142,12 @@ useEffect(() => {
 
     if (user) {
       try {
-        const res = await fetch("https://cloud-burst-prediction-web.onrender.com", {
+        const res = await fetch("https://cloud-burst-prediction-web.onrender.com/api/search", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ city, userId: user.id }),
         });
+        
         const data = await res.json();
         if (data.message === "Search saved successfully") {
           setSaved(true);
