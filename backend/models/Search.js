@@ -1,9 +1,10 @@
+// models/Search.js
 import mongoose from "mongoose";
 
-const searchSchema = new mongoose.Schema({
+const SearchSchema = new mongoose.Schema({
+  city: { type: String, required: true },
   userId: { type: String, required: true },
-  city:   { type: String, required: true },
-  searchedAt: { type: Date, default: Date.now },
-}, { collection: "UserData" });   // ✅ use your collection name
+  createdAt: { type: Date, default: Date.now }
+});
 
-export default mongoose.model("UserData", searchSchema);
+export default mongoose.model("Search", SearchSchema);
