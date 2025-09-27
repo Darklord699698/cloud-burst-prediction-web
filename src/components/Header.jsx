@@ -134,33 +134,39 @@ useEffect(() => {
 
   const { user } = useUser();
   const cities = ["Los Angeles", "Chicago", "New York"];
+  // Determine backend URL based on environment
+  const BASE_URL = process.env.NODE_ENV === "development"
+  ? "http://localhost:5000"
+  : "https://cloud-burst-prediction-web.onrender.com";
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    const city = searchInput.trim();
-    if (!city) return;
 
-    if (user) {
-      try {
-        const res = await fetch("https://cloud-burst-prediction-web.onrender.com/api/search", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ city, userId: user.id }),
-        });
-        
-        const data = await res.json();
-        if (data.message === "Search saved successfully") {
-          setSaved(true);
-          setTimeout(() => setSaved(false), 2000);
-        }
-      } catch (err) {
-        console.error("Error saving search:", err);
-      }
+const handleSearch = async (e) => {
+e.preventDefault();
+const city = searchInput.trim();
+if (!city) return;
+
+if (user) {
+  try {
+    const res = await fetch(`${BASE_URL}/api/search`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ city, userId: user.id }),
+    });
+
+    const data = await res.json();
+    if (data.message === "Search saved successfully") {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
     }
+  } catch (err) {
+    console.error("Error saving search:", err);
+  }
+}
 
-    onSearch(city);
-    setShowDropdown(false);
-  };
+onSearch(city);
+setShowDropdown(false);
+};
+
 
   const handleSelectCity = (city) => {
     setSearchInput(city);

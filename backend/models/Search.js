@@ -8,4 +8,4 @@ const SearchSchema = new mongoose.Schema({
 });
 
 // ✅ force collection name to match Atlas collection
-export default mongoose.model("UserData", SearchSchema, "UderData");
+export default mongoose.model("UserData", SearchSchema, "UserData");
