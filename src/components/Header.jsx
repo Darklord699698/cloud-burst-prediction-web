@@ -142,7 +142,7 @@ useEffect(() => {
 
     if (user) {
       try {
-        const res = await fetch("http://localhost:5000/api/search", {
+        const res = await fetch("https://cloud-burst-prediction-web.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ city, userId: user.id }),
